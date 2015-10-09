@@ -1,0 +1,38 @@
+@import 'nib'
+
+body
+  margin 0
+  border-left 1px solid #e2e2e2
+  border-right @border-left
+  min-height 100vmin
+  overflow-x hidden
+  background-color #f9f9f9
+  font 16px/1.7 Helvetica, serif
+  padding-bottom 60px
+
+::-webkit-scrollbar
+  display none
+ 
+
+.animes
+  padding-bottom 20px
+  .anime 
+    padding 10px
+    background-color white
+    margin-bottom 20px
+    border-top 1px solid #e2e2e2
+    border-bottom @border-top
+    .anime-time
+      padding 5px 0
+      color #999
+      
+.footer
+  height 50px
+  line-height @height
+  background-color #f0f0f0
+  border 1px solid #e2e2e2
+  border-bottom none 
+  position fixed
+  bottom 0
+  left 0
+  right 0
