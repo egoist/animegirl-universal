@@ -7,31 +7,37 @@ body
   min-height 100vmin
   overflow-x hidden
   background-color #f9f9f9
-  font 16px/1.7 Helvetica, serif
+  font 16px/1.7 "Open Sans","Helvetica Neue",Helvetica,Arial,STHeiti,"Microsoft Yahei","SimSun",sans-serif
   padding-bottom 60px
 
 ::-webkit-scrollbar
   display none
- 
+
+h1,h2,h3,h4,h5
+  margin 0
 
 .animes
   padding-bottom 20px
-  .anime 
+  .anime
     padding 10px
     background-color white
     margin-bottom 20px
     border-top 1px solid #e2e2e2
     border-bottom @border-top
+    .anime-header
+      h2
+        font-size 20px
     .anime-time
       padding 5px 0
       color #999
-      
+
 .footer
+  text-align center
   height 50px
   line-height @height
   background-color #f0f0f0
   border 1px solid #e2e2e2
-  border-bottom none 
+  border-bottom none
   position fixed
   bottom 0
   left 0
