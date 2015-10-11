@@ -62,8 +62,7 @@ export default {
     switchDay (weekday) {
       this.showDay = weekday.index
       setTimeout(() => {
-        if (isAtom)
-          Ps.update(wrap)
+        Ps.update(wrap)
         wrap.scrollTop = 0
       }, 200)
       
