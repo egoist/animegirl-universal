@@ -84,7 +84,7 @@
 	  }
 	});
 
-	var App = _vue2['default'].extend(__webpack_require__(229));
+	var App = _vue2['default'].extend(__webpack_require__(230));
 
 	router.start(App, '#app');
 
@@ -14112,7 +14112,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(110)
-	module.exports.template = __webpack_require__(228)
+	module.exports.template = __webpack_require__(229)
 
 
 /***/ },
@@ -14128,6 +14128,7 @@
 	var moment = __webpack_require__(111);
 	var Ps = __webpack_require__(198);
 	var wrap = document.querySelector('.wrap');
+	var isAtom = __webpack_require__(219);
 	exports['default'] = {
 	  data: function data() {
 	    return {
@@ -14162,19 +14163,23 @@
 	    switchDay: function switchDay(weekday) {
 	      this.showDay = weekday.index;
 	      setTimeout(function () {
-	        Ps.update(wrap);
+	        if (isAtom) Ps.update(wrap);
 	        wrap.scrollTop = 0;
 	      }, 200);
 	    }
 	  },
 	  ready: function ready() {
+	    if (isAtom) {
+	      wrap.style.height = '360px';
+	      document.body.style.overflow = 'hidden';
+	    }
 	    this.fetchAnimes('1510');
 	  },
 	  components: {
-	    Animes: __webpack_require__(219)
+	    Animes: __webpack_require__(220)
 	  },
 	  filters: {
-	    weekday: __webpack_require__(226)
+	    weekday: __webpack_require__(227)
 	  }
 	};
 	module.exports = exports['default'];
@@ -24154,14 +24159,28 @@
 
 /***/ },
 /* 219 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	module.exports = __webpack_require__(220)
-	module.exports.template = __webpack_require__(227)
+	"use strict";
 
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var isAtom = window && window.process && window.process.type;
+
+	exports["default"] = isAtom;
+	module.exports = exports["default"];
 
 /***/ },
 /* 220 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(221)
+	module.exports.template = __webpack_require__(228)
+
+
+/***/ },
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24170,14 +24189,14 @@
 	  value: true
 	});
 	var moment = __webpack_require__(111);
-	var time = __webpack_require__(221);
+	var time = __webpack_require__(222);
 	exports['default'] = {
 	  props: ['animes', 'weekday', 'show-day'],
 	  data: function data() {
 	    return {};
 	  },
 	  components: {
-	    Anime: __webpack_require__(222)
+	    Anime: __webpack_require__(223)
 	  },
 	  computed: {
 	    isShowDay: function isShowDay() {
@@ -24192,13 +24211,13 @@
 	    }
 	  },
 	  filters: {
-	    weekday: __webpack_require__(226)
+	    weekday: __webpack_require__(227)
 	  }
 	};
 	module.exports = exports['default'];
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -24223,15 +24242,15 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(223)
-	module.exports.template = __webpack_require__(225)
+	module.exports = __webpack_require__(224)
+	module.exports.template = __webpack_require__(226)
 
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24247,20 +24266,20 @@
 	      var cn = parseInt(this.anime.timeCN);
 	      var jp = parseInt(this.anime.timeJP);
 	      if (!cn && !jp) return false;
-	      var time = __webpack_require__(221)(this.anime);
+	      var time = __webpack_require__(222)(this.anime);
 	      var now = moment().hour() * 100 + moment().minute();
 	      if (time <= now) return true;else return false;
 	    }
 	  },
 	  methods: {},
 	  filters: {
-	    time: __webpack_require__(224)
+	    time: __webpack_require__(225)
 	  }
 	};
 	module.exports = exports['default'];
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24306,13 +24325,13 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"anime\">\r\n    <div class=\"anime-header\">\r\n      <h2 v-class=\"green: updated, red: !updated\">{{anime.titleCN}}</h2>\r\n    </div>\r\n    <div class=\"anime-time\">\r\n      <span >{{ anime | time }}</span>\r\n    </div>\r\n  </div>";
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24330,37 +24349,37 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"animes\">\r\n    <div class=\"anime-section\" v-repeat=\"anime in orderedAnimes\" v-show=\"isShowDay\">\r\n      <Anime anime=\"{{anime}}\"></Anime>\r\n    </div>\r\n  </div>";
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"loading\" v-show=\"animes.length == 0\">\r\n    <div class=\"clear-loading loading-effect-4\">\r\n      <div>\r\n        <span></span>\r\n        <span></span>\r\n        <span></span>\r\n        <span></span>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"all-animes\">\r\n    <div v-repeat=\"anime in animes\" class=\"day\">\r\n      <Animes animes=\"{{anime.animes}}\" weekday=\"{{anime.weekday}}\" show-day=\"{{showDay}}\"></Animes>\r\n    </div>\r\n  </div>\r\n \r\n  <footer class=\"footer\">\r\n    <div class=\"anime-showday clickable\">{{showDay | weekday}}</div>\r\n    <div class=\"anime-weekdays\">\r\n      <div class=\"anime-weekday clickable\" v-on=\"click: switchDay(weekday)\" v-class=\"current: weekday.current\" v-repeat=\"weekday in weekdays\">{{ weekday.day }}</div>\r\n    </div>\r\n  </footer>";
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(230)
-	module.exports = __webpack_require__(234)
-	module.exports.template = __webpack_require__(235)
+	__webpack_require__(231)
+	module.exports = __webpack_require__(235)
+	module.exports.template = __webpack_require__(236)
 
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(231);
+	var content = __webpack_require__(232);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(233)(content, {});
+	var update = __webpack_require__(234)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -24377,21 +24396,21 @@
 	}
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(232)();
+	exports = module.exports = __webpack_require__(233)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".loading {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n  -moz-transform: translateX(-50%) translateY(-50%);\n  -o-transform: translateX(-50%) translateY(-50%);\n  -ms-transform: translateX(-50%) translateY(-50%);\n  transform: translateX(-50%) translateY(-50%);\n}\n.clear-loading {\n  text-align: center;\n  margin: 0 20px;\n  position: relative;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  display: inline-block;\n}\n.loading-effect-4 {\n  width: 100px;\n  height: 100px;\n}\n.loading-effect-4 > div {\n  width: 100%;\n  height: 100%;\n  border: 1px solid #fff;\n  -webkit-border-radius: 50%;\n  border-radius: 50%;\n}\n.loading-effect-4 span {\n  background: #fff;\n  display: block;\n  width: 15%;\n  height: 15%;\n  -webkit-border-radius: 50%;\n  border-radius: 50%;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translate(-50%, 0);\n  -moz-transform: translate(-50%, 0);\n  -o-transform: translate(-50%, 0);\n  -ms-transform: translate(-50%, 0);\n  transform: translate(-50%, 0);\n  -webkit-transform-origin: 0 49px;\n  -moz-transform-origin: 0 49px;\n  -o-transform-origin: 0 49px;\n  -ms-transform-origin: 0 49px;\n  transform-origin: 0 49px;\n}\n.loading-effect-4 span:first-child {\n  background: #19be9b;\n  -webkit-animation: effect-4-1 1.5s infinite linear;\n  -moz-animation: effect-4-1 1.5s infinite linear;\n  -o-animation: effect-4-1 1.5s infinite linear;\n  -ms-animation: effect-4-1 1.5s infinite linear;\n  animation: effect-4-1 1.5s infinite linear;\n}\n.loading-effect-4 span:nth-child(2) {\n  background: #fff;\n  -webkit-animation: effect-4-1 2s infinite linear;\n  -moz-animation: effect-4-1 2s infinite linear;\n  -o-animation: effect-4-1 2s infinite linear;\n  -ms-animation: effect-4-1 2s infinite linear;\n  animation: effect-4-1 2s infinite linear;\n}\n.loading-effect-4 span:nth-child(3) {\n  background: #e64b3c;\n  -webkit-animation: effect-4-1 2.5s infinite linear;\n  -moz-animation: effect-4-1 2.5s infinite linear;\n  -o-animation: effect-4-1 2.5s infinite linear;\n  -ms-animation: effect-4-1 2.5s infinite linear;\n  animation: effect-4-1 2.5s infinite linear;\n}\n.loading-effect-4 span:nth-child(4) {\n  background: #32465f;\n  -webkit-animation: effect-4-1 3s infinite linear;\n  -moz-animation: effect-4-1 3s infinite linear;\n  -o-animation: effect-4-1 3s infinite linear;\n  -ms-animation: effect-4-1 3s infinite linear;\n  animation: effect-4-1 3s infinite linear;\n}\n@-webkit-keyframes effect-4-1 {\n  from {\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n@-moz-keyframes effect-4-1 {\n  from {\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n@-webkit-keyframes effect-4-1 {\n  from {\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n@-o-keyframes effect-4-1 {\n  from {\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n@keyframes effect-4-1 {\n  from {\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\nbody {\n  margin: 0;\n  background-color: #f9f9f9;\n  font: 16px/1.7 \"Open Sans\", \"Helvetica Neue\", Helvetica, Arial, STHeiti, \"Microsoft Yahei\", \"SimSun\", sans-serif;\n  padding-bottom: 40px;\n  overflow: hidden;\n}\nh1,\nh2,\nh3,\nh4,\nh5 {\n  margin: 0;\n}\n.wrap {\n  border: 1px solid #1abc9c;\n  border-bottom: none;\n  height: 360px;\n  position: relative;\n  overflow: hidden;\n}\n.animes .anime {\n  padding: 0 10px;\n  background-color: #f2faf8;\n  border-bottom: 1px solid #e7f0ee;\n}\n.animes .anime .anime-header {\n  padding-top: 5px;\n}\n.animes .anime .anime-header h2 {\n  font-size: 16px;\n  font-weight: 400;\n}\n.animes .anime .anime-time {\n  padding-bottom: 5px;\n  color: #999;\n  font-size: 14px;\n}\n.footer {\n  text-align: center;\n  position: relative;\n  height: 40px;\n  line-height: 40px;\n  background-color: #1abc9c;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  color: #fff;\n}\n.footer .clickable {\n  cursor: pointer;\n}\n.footer .clickable:hover,\n.footer .clickable.current {\n  background-color: #16a085;\n}\n.footer .anime-showday {\n  position: absolute;\n  width: 140px;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n  -moz-transform: translateX(-50%) translateY(-50%);\n  -o-transform: translateX(-50%) translateY(-50%);\n  -ms-transform: translateX(-50%) translateY(-50%);\n  transform: translateX(-50%) translateY(-50%);\n  top: 50%;\n  z-index: 9900;\n}\n.footer .anime-weekdays {\n  display: -webkit-box;\n  display: -moz-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: box;\n  display: flex;\n  background-color: #1abc9c;\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  z-index: 9999;\n}\n.footer .anime-weekdays .anime-weekday {\n  width: 22%;\n}\n.green {\n  color: #008000 !important;\n}\n.red {\n  color: #f00 !important;\n}\n@media screen and (min-width: 768px) {\n  .wrap {\n    max-width: 800px;\n    margin: 20px auto;\n    border-bottom: 1px solid #1abc9c;\n  }\n}\n@media screen and (max-width: 768px) {\n  body {\n    background-color: #f2faf8;\n  }\n}\n", ""]);
+	exports.push([module.id, ".loading {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n  -moz-transform: translateX(-50%) translateY(-50%);\n  -o-transform: translateX(-50%) translateY(-50%);\n  -ms-transform: translateX(-50%) translateY(-50%);\n  transform: translateX(-50%) translateY(-50%);\n}\n.clear-loading {\n  text-align: center;\n  margin: 0 20px;\n  position: relative;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  display: inline-block;\n}\n.loading-effect-4 {\n  width: 100px;\n  height: 100px;\n}\n.loading-effect-4 > div {\n  width: 100%;\n  height: 100%;\n  border: 1px solid #fff;\n  -webkit-border-radius: 50%;\n  border-radius: 50%;\n}\n.loading-effect-4 span {\n  background: #fff;\n  display: block;\n  width: 15%;\n  height: 15%;\n  -webkit-border-radius: 50%;\n  border-radius: 50%;\n  position: absolute;\n  left: 50%;\n  -webkit-transform: translate(-50%, 0);\n  -moz-transform: translate(-50%, 0);\n  -o-transform: translate(-50%, 0);\n  -ms-transform: translate(-50%, 0);\n  transform: translate(-50%, 0);\n  -webkit-transform-origin: 0 49px;\n  -moz-transform-origin: 0 49px;\n  -o-transform-origin: 0 49px;\n  -ms-transform-origin: 0 49px;\n  transform-origin: 0 49px;\n}\n.loading-effect-4 span:first-child {\n  background: #19be9b;\n  -webkit-animation: effect-4-1 1.5s infinite linear;\n  -moz-animation: effect-4-1 1.5s infinite linear;\n  -o-animation: effect-4-1 1.5s infinite linear;\n  -ms-animation: effect-4-1 1.5s infinite linear;\n  animation: effect-4-1 1.5s infinite linear;\n}\n.loading-effect-4 span:nth-child(2) {\n  background: #fff;\n  -webkit-animation: effect-4-1 2s infinite linear;\n  -moz-animation: effect-4-1 2s infinite linear;\n  -o-animation: effect-4-1 2s infinite linear;\n  -ms-animation: effect-4-1 2s infinite linear;\n  animation: effect-4-1 2s infinite linear;\n}\n.loading-effect-4 span:nth-child(3) {\n  background: #e64b3c;\n  -webkit-animation: effect-4-1 2.5s infinite linear;\n  -moz-animation: effect-4-1 2.5s infinite linear;\n  -o-animation: effect-4-1 2.5s infinite linear;\n  -ms-animation: effect-4-1 2.5s infinite linear;\n  animation: effect-4-1 2.5s infinite linear;\n}\n.loading-effect-4 span:nth-child(4) {\n  background: #32465f;\n  -webkit-animation: effect-4-1 3s infinite linear;\n  -moz-animation: effect-4-1 3s infinite linear;\n  -o-animation: effect-4-1 3s infinite linear;\n  -ms-animation: effect-4-1 3s infinite linear;\n  animation: effect-4-1 3s infinite linear;\n}\n@-webkit-keyframes effect-4-1 {\n  from {\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n@-moz-keyframes effect-4-1 {\n  from {\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n@-webkit-keyframes effect-4-1 {\n  from {\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n@-o-keyframes effect-4-1 {\n  from {\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n@keyframes effect-4-1 {\n  from {\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\nbody {\n  margin: 0;\n  background-color: #f9f9f9;\n  font: 16px/1.7 \"Open Sans\", \"Helvetica Neue\", Helvetica, Arial, STHeiti, \"Microsoft Yahei\", \"SimSun\", sans-serif;\n  padding-bottom: 40px;\n}\nh1,\nh2,\nh3,\nh4,\nh5 {\n  margin: 0;\n}\n.wrap {\n  border: 1px solid #1abc9c;\n  border-bottom: none;\n  height: 85vh;\n  position: relative;\n  overflow: hidden;\n}\n.animes .anime {\n  padding: 0 10px;\n  background-color: #f2faf8;\n  border-bottom: 1px solid #e7f0ee;\n}\n.animes .anime .anime-header {\n  padding-top: 5px;\n}\n.animes .anime .anime-header h2 {\n  font-size: 16px;\n  font-weight: 400;\n}\n.animes .anime .anime-time {\n  padding-bottom: 5px;\n  color: #999;\n  font-size: 14px;\n}\n.footer {\n  text-align: center;\n  position: relative;\n  height: 40px;\n  line-height: 40px;\n  background-color: #1abc9c;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  color: #fff;\n}\n.footer .clickable {\n  cursor: pointer;\n}\n.footer .clickable:hover,\n.footer .clickable.current {\n  background-color: #16a085;\n}\n.footer .anime-showday {\n  position: absolute;\n  width: 140px;\n  left: 50%;\n  -webkit-transform: translateX(-50%) translateY(-50%);\n  -moz-transform: translateX(-50%) translateY(-50%);\n  -o-transform: translateX(-50%) translateY(-50%);\n  -ms-transform: translateX(-50%) translateY(-50%);\n  transform: translateX(-50%) translateY(-50%);\n  top: 50%;\n  z-index: 9900;\n}\n.footer .anime-weekdays {\n  display: -webkit-box;\n  display: -moz-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: box;\n  display: flex;\n  background-color: #1abc9c;\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  z-index: 9999;\n}\n.footer .anime-weekdays .anime-weekday {\n  width: 22%;\n}\n.green {\n  color: #008000 !important;\n}\n.red {\n  color: #f00 !important;\n}\n@media screen and (min-width: 768px) {\n  .wrap {\n    max-width: 800px;\n    margin: 20px auto;\n    border-bottom: 1px solid #1abc9c;\n  }\n}\n@media screen and (max-width: 768px) {\n  body {\n    background-color: #f2faf8;\n  }\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports) {
 
 	/*
@@ -24446,7 +24465,7 @@
 	};
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -24671,7 +24690,7 @@
 
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -24687,7 +24706,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports) {
 
 	module.exports = "<router-view class=\"view\" v-transition=\"test\" transition-mode=\"out-in\" show-day=\"{{showDay}}\"></router-view>";

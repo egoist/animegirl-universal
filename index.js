@@ -1,7 +1,6 @@
 var menubar = require('menubar')
 var ipc = require('ipc')
 var globalShortcut = require('global-shortcut')
-
 var mb = menubar({
   width: 300,
   preloadWindow: true,

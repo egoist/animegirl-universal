@@ -28,6 +28,7 @@ const fetch = require('bgm-fetch')
 const moment = require('moment')
 const Ps = require('perfect-scrollbar')
 const wrap = document.querySelector('.wrap')
+const isAtom = require('../helpers/isAtom')
 export default {
   data () {
     return {
@@ -55,19 +56,24 @@ export default {
         .get(date, true)
         .then(data => {
           this.animes = data
-          Ps.initialize(wrap)
+            Ps.initialize(wrap)
         })
     },
     switchDay (weekday) {
       this.showDay = weekday.index
       setTimeout(() => {
-        Ps.update(wrap)
+        if (isAtom)
+          Ps.update(wrap)
         wrap.scrollTop = 0
       }, 200)
       
     }
   },
   ready () {
+    if (isAtom) {
+      wrap.style.height = '360px'
+      document.body.style.overflow = 'hidden'
+    }
     this.fetchAnimes('1510')
   },
   components: {
