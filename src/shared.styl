@@ -2,8 +2,6 @@
 
 body
   margin 0
-  border-left 1px solid #e2e2e2
-  border-right @border-left
   min-height 100vmin
   overflow-x hidden
   background-color #f9f9f9
@@ -16,29 +14,61 @@ body
 h1,h2,h3,h4,h5
   margin 0
 
+.wrap
+  border 1px solid #1abc9c
+  border-bottom none
+
 .animes
-  padding-bottom 20px
   .anime
-    padding 10px
-    background-color white
-    margin-bottom 20px
-    border-top 1px solid #e2e2e2
-    border-bottom @border-top
+    padding 0 10px
+    background-color #f2faf8
+    border-bottom 1px solid #e7f0ee
     .anime-header
+      padding-top 5px
       h2
-        font-size 20px
+        font-size 16px
+        font-weight 400
     .anime-time
-      padding 5px 0
+      padding-bottom 5px
       color #999
+      font-size 14px
 
 .footer
   text-align center
-  height 50px
+  position relative
+  height 40px
   line-height @height
-  background-color #f0f0f0
-  border 1px solid #e2e2e2
-  border-bottom none
+  background-color #1abc9c
   position fixed
   bottom 0
   left 0
   right 0
+  color white
+  .clickable
+    cursor pointer
+    &:hover,&.current
+      background-color #16a085
+  .anime-showday
+    position absolute
+    width 140px
+    left 50%
+    transform translateX(-50%) translateY(-50%)
+    top 50%
+    z-index 9900
+  .anime-weekdays
+    display flex
+    background-color @background-color
+    position absolute
+    top 0
+    left 0
+    right 0
+    bottom 0
+    z-index 9999
+    .anime-weekday
+      width 22%
+
+@media screen and (min-width: 768px)
+  .wrap
+    max-width 800px
+    margin 0 auto
+    border-bottom 1px solid #1abc9c
