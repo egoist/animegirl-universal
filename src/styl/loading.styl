@@ -1,0 +1,79 @@
+.loading 
+  position fixed
+  top 50%
+  left 50%
+  transform translateX(-50%) translateY(-50%)
+
+.clear-loading
+  text-align center
+  margin 0 20px
+  position relative
+  box-sizing border-box
+  display inline-block
+
+.loading-effect-4
+  width 100px
+  height 100px
+  & > div
+    width 100%
+    height 100%
+    border 1px solid #fff
+    border-radius 50%
+  span
+    background #fff
+    display block
+    width 15%
+    height 15%
+    border-radius 50%
+    position absolute
+    left 50%
+    transform translate(-50%, 0)
+    transform-origin 0 49px
+    &:first-child
+      background #19be9b
+      animation effect-4-1 1.5s infinite linear
+    &:nth-child(2)
+      background #ffffff
+      animation effect-4-1 2s infinite linear
+    &:nth-child(3)
+      background #e64b3c
+      animation effect-4-1 2.5s infinite linear
+    &:nth-child(4)
+      background #32465f
+      animation effect-4-1 3s infinite linear
+
+
+
+
+@-webkit-keyframes effect-4-1 {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes effect-4-1 {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

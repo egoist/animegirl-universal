@@ -1,7 +1,20 @@
 <template>
-  <div v-repeat="anime in animes" class="day">
-    <Animes animes="{{anime.animes}}" weekday="{{anime.weekday}}" show-day="{{showDay}}"></Animes>
+  <div class="loading" v-show="animes.length == 0">
+    <div class="clear-loading loading-effect-4">
+      <div>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
   </div>
+  <div class="all-animes">
+    <div v-repeat="anime in animes" class="day">
+      <Animes animes="{{anime.animes}}" weekday="{{anime.weekday}}" show-day="{{showDay}}"></Animes>
+    </div>
+  </div>
+ 
   <footer class="footer">
     <div class="anime-showday clickable">{{showDay | weekday}}</div>
     <div class="anime-weekdays">
@@ -13,6 +26,8 @@
 <script>
 const fetch = require('bgm-fetch')
 const moment = require('moment')
+const Ps = require('perfect-scrollbar')
+const wrap = document.querySelector('.wrap')
 export default {
   data () {
     return {
@@ -40,11 +55,16 @@ export default {
         .get(date, true)
         .then(data => {
           this.animes = data
+          Ps.initialize(wrap)
         })
     },
     switchDay (weekday) {
       this.showDay = weekday.index
-      window.scrollTo(0, 0)
+      setTimeout(() => {
+        Ps.update(wrap)
+        wrap.scrollTop = 0
+      }, 200)
+      
     }
   },
   ready () {
