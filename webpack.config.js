@@ -1,12 +1,17 @@
 var path = require('path')
 var vue = require('vue-loader')
 var nib = require('nib')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var rm = require('rimraf')
+
+rm.sync('./build')
 
 module.exports = {
   entry: ['./src/main.js'],
   output: {
     path: path.resolve('./build'),
-    filename: 'bundle.js'
+    filename: 'bundle.[hash].js',
+    publicPath: '/build/'
   },
   resolve: {
     extensions: ['', '.js', '.vue']
@@ -25,7 +30,13 @@ module.exports = {
       },
     ]
   },
-  plugins: [],
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: '番娘',
+      filename: '../index.html',
+      template: './index.template.html'
+    })
+  ],
   stylus: {
     use: [nib()]
   }
