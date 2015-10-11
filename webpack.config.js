@@ -11,7 +11,7 @@ module.exports = {
   output: {
     path: path.resolve('./build'),
     filename: 'bundle.[hash].js',
-    publicPath: '/build/'
+    publicPath: './build/'
   },
   resolve: {
     extensions: ['', '.js', '.vue']
