@@ -32,6 +32,7 @@ h1,h2,h3,h4,h5
       color #999
       font-size 14px
 
+sep = 100/7 + '%' 
 .footer
   text-align center
   position relative
@@ -55,7 +56,6 @@ h1,h2,h3,h4,h5
     top 50%
     z-index 9900
   .anime-weekdays
-    display flex
     background-color @background-color
     position absolute
     top 0
@@ -63,8 +63,11 @@ h1,h2,h3,h4,h5
     right 0
     bottom 0
     z-index 9999
+    clearfix()
     .anime-weekday
-      width 22%
+      width sep
+      float left
+      height 40px
 
 .green
   color green !important
